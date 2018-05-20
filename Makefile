@@ -17,11 +17,13 @@ else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
         CCFLAGS += -D LINUX
-        CFLAGS = -g -Wall -lGL -lGLU -lglut
+        CFLAGS = -g -Wall 
+        LDFLAGS = -lGL -lGLU -lglut
     endif
     ifeq ($(UNAME_S),Darwin)
         CCFLAGS += -D OSX
-        CFLAGS = -g -Wall -framework OpenGL -framework GLUT
+        CFLAGS = -g -Wall 
+        LDFLAGS = -framework OpenGL -framework GLUT
     endif
     UNAME_P := $(shell uname -p)
     ifeq ($(UNAME_P),x86_64)
@@ -40,10 +42,10 @@ endif
 all: clock 
 
 clock: clock.o
-	$(CC) $(CFLAGS) -o clock clock.o
+	$(CC) -o clock clock.o $(LDFLAGS)
 
 clock.o: clock.cpp
-	$(CC) -c clock.cpp
+	$(CC) -c  $(CFLAGS) clock.cpp
 
 clean:
 	-rm -f clock clock.o
